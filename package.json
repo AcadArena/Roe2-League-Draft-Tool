@@ -8,7 +8,7 @@
   "license": "MIT",
   "workspaces": [
     "backend",
-    "frontend"
+    "layouts/*"
   ],
   "devDependencies": {
     "husky": "8.0.1",
