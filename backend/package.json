@@ -22,7 +22,7 @@
     "league-connect": "5.5.0",
     "minimist": "1.2.6",
     "morgan": "1.10.0",
-    "needle": "2.9.1",
+    "needle": "3.1.0",
     "typescript": "4.7.3",
     "winston": "3.7.2",
     "ws": "8.8.0"
