@@ -1,4 +1,15 @@
 {
+  "name": "draft-tool",
+  "version": "1.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:AcadArena/lol-pick-ban-ui.git",
+  "author": "AcadArena",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "devDependencies": {
     "husky": "8.0.1",
     "lint-staged": "13.0.1",
@@ -7,12 +18,6 @@
   "scripts": {
     "prepare": "husky install"
   },
-  "name": "draft-tool",
-  "version": "1.0.1",
-  "main": "index.js",
-  "repository": "git@github.com:AcadArena/lol-pick-ban-ui.git",
-  "author": "AcadArena",
-  "license": "MIT",
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   }
