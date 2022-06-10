@@ -1,11 +1,16 @@
-import {Action, ActionType, Cell, Timer} from '../types/lcu';
-import {Ban, Champion, Pick, Team} from '../types/dto';
+import { Action, ActionType, Cell, Timer } from '../types/lcu';
+import { Ban, Champion, Pick, Team } from '../types/dto';
 import DataProviderService from '../data/DataProviderService';
 import DataDragon from '../data/league/DataDragon';
-import {CurrentState} from '../data/CurrentState';
+import { CurrentState } from '../data/CurrentState';
 import RecordingDatapoint from '../recording/RecordingDatapoint';
 
-const convertTeam = (kwargs: { team: Array<Cell>; actions: Array<Action>; dataProvider: DataProviderService; ddragon: DataDragon }): Team => {
+const convertTeam = (kwargs: {
+  team: Array<Cell>;
+  actions: Array<Action>;
+  dataProvider: DataProviderService;
+  ddragon: DataDragon;
+}): Team => {
   const newTeam = new Team();
   newTeam.picks = kwargs.team.map((cell: Cell) => {
     const currentAction = kwargs.actions.find((action) => !action.completed);
@@ -40,7 +45,12 @@ const convertTeam = (kwargs: { team: Array<Cell>; actions: Array<Action>; dataPr
       pick.displayName = summoner.displayName;
     }
 
-    if (currentAction && currentAction.type === ActionType.PICK && currentAction.actorCellId === cell.cellId && !currentAction.completed) {
+    if (
+      currentAction &&
+      currentAction.type === ActionType.PICK &&
+      currentAction.actorCellId === cell.cellId &&
+      !currentAction.completed
+    ) {
       pick.isActive = true;
       newTeam.isActive = true;
     }
@@ -48,33 +58,39 @@ const convertTeam = (kwargs: { team: Array<Cell>; actions: Array<Action>; dataPr
     return pick;
   });
 
-  const isInThisTeam = (cellId: number): boolean => kwargs.team.filter((cell) => cell.cellId === cellId).length !== 0;
+  const isInThisTeam = (cellId: number): boolean =>
+    kwargs.team.filter((cell) => cell.cellId === cellId).length !== 0;
 
   let isBanDetermined = false;
-  newTeam.bans = kwargs.actions.filter((action) => action.type === ActionType.BAN && isInThisTeam(action.actorCellId)).map((action) => {
-    const ban = new Ban();
+  newTeam.bans = kwargs.actions
+    .filter(
+      (action) =>
+        action.type === ActionType.BAN && isInThisTeam(action.actorCellId)
+    )
+    .map((action) => {
+      const ban = new Ban();
 
-    if (!action.completed && !isBanDetermined) {
-      isBanDetermined = true;
-      ban.isActive = true;
-      newTeam.isActive = true;
-      ban.champion = new Champion();
+      if (!action.completed && !isBanDetermined) {
+        isBanDetermined = true;
+        ban.isActive = true;
+        newTeam.isActive = true;
+        ban.champion = new Champion();
+        return ban;
+      }
+
+      const champion = kwargs.ddragon.getChampionById(action.championId);
+      ban.champion = {
+        id: action.championId,
+        name: champion ? champion.name : '',
+        idName: champion ? champion.id.toString() : '',
+        loadingImg: champion ? champion.loadingImg : '',
+        splashImg: champion ? champion.splashImg : '',
+        splashCenteredImg: champion ? champion.splashCenteredImg : '',
+        squareImg: champion ? champion.squareImg : '',
+      };
+
       return ban;
-    }
-
-    const champion = kwargs.ddragon.getChampionById(action.championId);
-    ban.champion = {
-      id: action.championId,
-      name: champion ? champion.name : '',
-      idName: champion ? champion.id.toString() : '',
-      loadingImg: champion ? champion.loadingImg : '',
-      splashImg: champion ? champion.splashImg : '',
-      splashCenteredImg: champion ? champion.splashCenteredImg : '',
-      squareImg: champion ? champion.squareImg : '',
-    };
-
-    return ban;
-  });
+    });
 
   return newTeam;
 };
@@ -115,18 +131,34 @@ const convertStateName = (actions: Array<Action>) => {
   }
 };
 
-const convertState = (state: CurrentState, dataProvider: DataProviderService, ddragon: DataDragon): { blueTeam: Team; redTeam: Team; timer: number; state: string } => {
+const convertState = (
+  state: CurrentState,
+  dataProvider: DataProviderService,
+  ddragon: DataDragon
+): { blueTeam: Team; redTeam: Team; timer: number; state: string } => {
   const lcuSession = state.session;
 
-  const currentDate = (state as RecordingDatapoint).time ? new Date((state as RecordingDatapoint).time) : new Date();
+  const currentDate = (state as RecordingDatapoint).time
+    ? new Date((state as RecordingDatapoint).time)
+    : new Date();
 
   const flattenedActions: Array<Action> = [];
-  lcuSession.actions.forEach(actionGroup => {
+  lcuSession.actions.forEach((actionGroup) => {
     flattenedActions.push(...actionGroup);
   });
 
-  const blueTeam = convertTeam({ team: lcuSession.myTeam, actions: flattenedActions, dataProvider, ddragon });
-  const redTeam = convertTeam({ team: lcuSession.theirTeam, actions: flattenedActions, dataProvider, ddragon });
+  const blueTeam = convertTeam({
+    team: lcuSession.myTeam,
+    actions: flattenedActions,
+    dataProvider,
+    ddragon,
+  });
+  const redTeam = convertTeam({
+    team: lcuSession.theirTeam,
+    actions: flattenedActions,
+    dataProvider,
+    ddragon,
+  });
 
   const timer = convertTimer(lcuSession.timer, currentDate);
   const stateName = convertStateName(flattenedActions);
@@ -135,7 +167,7 @@ const convertState = (state: CurrentState, dataProvider: DataProviderService, dd
     blueTeam,
     redTeam,
     timer,
-    state: stateName
+    state: stateName,
   };
 };
 

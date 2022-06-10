@@ -14,8 +14,10 @@ import Connector, {
 import { Response } from 'league-connect';
 const log = logger('LCUDataProviderService');
 
-class LeagueDataProviderService extends EventEmitter
-  implements DataProviderService {
+class LeagueDataProviderService
+  extends EventEmitter
+  implements DataProviderService
+{
   connector: Connector;
   connectionInfo!: ConnectionInfo;
   recorder!: Recorder;
@@ -61,13 +63,13 @@ class LeagueDataProviderService extends EventEmitter
   async getCurrentData(): Promise<CurrentState | null> {
     if (!this.connectionInfo || !this.connectionInfo.port) {
       log.debug('Not connected to LCU, but tried to get data.');
-      return null
+      return null;
     }
 
     const response = await this.connector.request({
       url: '/lol-champ-select/v1/session',
-      method: 'GET'
-    })
+      method: 'GET',
+    });
 
     const currentState = new CurrentState(
       response?.ok ?? false,
@@ -92,7 +94,7 @@ class LeagueDataProviderService extends EventEmitter
       team.map((cell) =>
         this.connector.request({
           url: `/lol-summoner/v1/summoners/${cell.summonerId}`,
-          method: 'GET'
+          method: 'GET',
         })
       );
 

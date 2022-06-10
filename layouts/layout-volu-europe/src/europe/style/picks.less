@@ -26,7 +26,8 @@
     }
 
     .PlayerName {
-      transition: height 1s, font-size 1s, margin-top 1s, background-color 0.3s, color 0.3s;
+      transition: height 1s, font-size 1s, margin-top 1s, background-color 0.3s,
+        color 0.3s;
       height: var(--pick-name-height);
       color: white;
       background-color: black;
@@ -55,7 +56,8 @@
         width: calc(100% + calc(2 * var(--pick-image-crop)));
         height: 100%;
         object-fit: cover;
-        object-position: calc(-1 * var(--pick-image-crop)) calc(-1 * var(--pick-image-crop));
+        object-position: calc(-1 * var(--pick-image-crop))
+          calc(-1 * var(--pick-image-crop));
       }
 
       &.Active::before {
@@ -78,8 +80,8 @@
 
 &.TeamBlue .Picks .Pick {
   &:last-child {
-     border-right: solid var(--border-between-color) 1px;
-   }
+    border-right: solid var(--border-between-color) 1px;
+  }
   &:first-child {
     border: none;
   }
