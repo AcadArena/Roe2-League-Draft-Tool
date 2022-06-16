@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "private": true,
   "main": "dist/app.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "babel-cli": "6.26.0",
     "babel-preset-es2015": "6.24.1",
     "cross-env": "7.0.3",
-    "esbuild": "0.14.43",
+    "esbuild": "0.14.44",
     "esbuild-register": "3.3.3",
     "eslint": "8.17.0",
     "eslint-plugin-import": "2.26.0",
