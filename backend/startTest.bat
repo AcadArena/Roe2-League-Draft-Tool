@@ -1,1 +1,1 @@
-yarn start --data recordings/tournament-draft
+Powershell -C "yarn start --data recordings/tournament-draft"

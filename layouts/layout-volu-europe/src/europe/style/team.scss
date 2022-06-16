@@ -1,8 +1,7 @@
 .Team {
-  position: absolute;
-  width: var(--box-team-width);
+  position: fixed;
   height: var(--box-height);
-
+  display: flex;
   bottom: var(--champselect-margin-bot);
 
   .TeamName {
@@ -36,21 +35,22 @@
   @import "./bans";
 
   &.TeamBlue {
-    right: calc(50% + calc(var(--box-width) / 2));
-
+    left: 65px;
+    transform: rotate(-1.7deg);
     .TeamScore {
       border-right: 3px solid black;
     }
 
+    .BansWrapper {
+      right: 0;
+      bottom: calc(100% + 20px);
+      transform: rotate(1.7deg);
+    }
     .Bans {
-      justify-content: flex-end;
-      background-color: var(--color-blue);
-      border: solid var(--color-blue) var(--border-width);
-      float: right;
-
+      // justify-content: flex-end;
+      flex-direction: row;
+      right: 0;
       .Ban {
-        border-left: solid var(--color-blue) var(--border-width);
-
         .BanImage.Active::before {
           background-image: linear-gradient(
             to left,
@@ -82,20 +82,15 @@
   }
 
   &.TeamRed {
-    left: calc(50% + calc(var(--box-width) / 2));
+    right: 61px;
+    transform: rotate(1.7deg);
 
     .TeamScore {
       border-left: 3px solid black;
     }
 
     .Bans {
-      background-color: var(--color-red);
-      border: solid var(--color-red) var(--border-width);
-      float: left;
-
       .Ban {
-        border-right: solid var(--color-red) var(--border-width);
-
         .BanImage.Active::before {
           background-image: linear-gradient(
             to left,

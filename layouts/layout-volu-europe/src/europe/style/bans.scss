@@ -3,7 +3,6 @@
   height: var(--box-ban-height);
   display: flex;
   box-sizing: border-box;
-
   .Ban {
     display: block;
     width: calc(var(--box-ban-height) - calc(2 * var(--border-width)));
@@ -46,6 +45,7 @@
 
 .BansWrapper {
   overflow: hidden;
+  position: absolute;
 }
 
 .BansBox {

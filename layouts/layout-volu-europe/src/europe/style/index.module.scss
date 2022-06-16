@@ -22,10 +22,10 @@ body {
   .MiddleBox {
     position: absolute;
     color: white;
-    width: var(--box-width);
-    height: calc(var(--box-pick-height) + var(--box-ban-height));
-
-    bottom: var(--champselect-margin-bot);
+    width: 150px;
+    // height: calc(var(--box-pick-height) + var(--box-ban-height));
+    z-index: 9999999;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden;
@@ -33,7 +33,7 @@ body {
 
   .Patch {
     height: var(--box-patch-height);
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     color: white;
     /* border-left: darkgrey 1px solid;

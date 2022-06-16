@@ -19,9 +19,12 @@ const Pick = (props) => (
       className={cx(css.PickImage, {
         [css.Active]: props.isActive,
       })}
-    >
-      <img src={props.champion.loadingImg} alt="" />
-    </div>
+      style={{
+        backgroundImage: `url("${props.champion.loadingImg}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center bottom",
+      }}
+    ></div>
     <div className={cx(css.PlayerName)}>
       <span>{props.displayName}</span>
     </div>

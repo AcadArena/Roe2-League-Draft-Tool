@@ -22,14 +22,12 @@ class State extends EventEmitter {
   }
 
   champselectEnded(): void {
-    this.data.blueTeam = new Team()
-    this.data.redTeam = new Team()
-    this.data.timer = 0
-    this.data.champSelectActive = false
-
-    this.emit("champSelectEnded")
-
-    this.triggerUpdate()
+    // this.data.blueTeam = new Team()
+    // this.data.redTeam = new Team()
+    // this.data.timer = 0
+    // this.data.champSelectActive = false
+    // this.emit("champSelectEnded")
+    // this.triggerUpdate()
   }
 
   newState(state: {

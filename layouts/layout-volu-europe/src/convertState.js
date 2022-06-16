@@ -5,7 +5,7 @@ import midSplash from "./assets/mid_splash_placeholder.svg"
 import botSplash from "./assets/bot_splash_placeholder.svg"
 import supSplash from "./assets/sup_splash_placeholder.svg"
 
-const pickSplashes = [topSplash, jungSplash, midSplash, botSplash, supSplash]
+// const pickSplashes = [topSplash, jungSplash, midSplash, botSplash, supSplash]
 
 const makeUrlAbsolute = (url, backendUrl) => {
   if (!url || !url.startsWith("/cache")) {
@@ -26,18 +26,18 @@ const putPlaceholders = (team, backendUrl) => {
     // Check if exists
     if (i >= team.picks.length) {
       // Does not exists, push
-      team.picks.push({
-        champion: {
-          loadingImg: pickSplashes[i],
-        },
-      })
+      // team.picks.push({
+      //   champion: {
+      //     loadingImg: pickSplashes[i],
+      //   },
+      // })
     } else {
       // Exists, check!
       const pick = team.picks[i]
       if (!pick.champion || !pick.champion.loadingImg) {
-        pick.champion = {
-          loadingImg: pickSplashes[i],
-        }
+        // pick.champion = {
+        //   loadingImg: pickSplashes[i],
+        // }
         // pick.spell1 = null;
         // pick.spell2 = null;
       }

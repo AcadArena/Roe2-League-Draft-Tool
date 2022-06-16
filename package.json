@@ -16,9 +16,14 @@
     "prettier": "2.6.2"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "concurrently \"yarn workspace backend start\" \"yarn workspace layout-allg start\"",
+    "start:test": "concurrently \"yarn workspace backend start --data ../recordings/tournament-draft\" \"yarn workspace layout-allg start\""
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "concurrently": "7.2.2"
   }
 }

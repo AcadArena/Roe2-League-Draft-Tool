@@ -5,7 +5,10 @@ import Pick from "./Pick"
 import css from "./style/index.module.scss"
 import Ban from "./Ban"
 
-import logo from "../assets/Logo_Itemania_2019.png"
+import left from "../assets/left-arrow.png"
+import right from "../assets/right-arrow.png"
+import bg from "../assets/bg.png"
+import front from "../assets/front.png"
 
 export default class Overlay extends React.Component {
   state = {
@@ -68,29 +71,9 @@ export default class Overlay extends React.Component {
           ))}
         </div>
         <div className={css.BansWrapper}>
-          <div
-            className={cx(css.Bans, {
-              [css.WithScore]: config.frontend.scoreEnabled,
-            })}
-          >
-            {teamName === css.TeamBlue && config.frontend.scoreEnabled && (
-              <div className={css.TeamScore}>{teamConfig.score}</div>
-            )}
+          <div className={cx(css.Bans)}>
             {teamName === css.TeamRed && renderBans(teamState)}
-            <div
-              className={cx(css.TeamName, {
-                [css.WithoutCoaches]: !config.frontend.coachesEnabled,
-              })}
-            >
-              {teamConfig.name}
-              {config.frontend.coachesEnabled && (
-                <div className={css.CoachName}>Coach: {teamConfig.coach}</div>
-              )}
-            </div>
             {teamName === css.TeamBlue && renderBans(teamState)}
-            {teamName === css.TeamRed && config.frontend.scoreEnabled && (
-              <div className={css.TeamScore}>{teamConfig.score}</div>
-            )}
           </div>
         </div>
       </div>
@@ -106,8 +89,37 @@ export default class Overlay extends React.Component {
         style={{
           "--color-red": config.frontend.redTeam.color,
           "--color-blue": config.frontend.blueTeam.color,
+
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: 1080,
+          width: 1920,
         }}
       >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: 1080,
+            width: 1920,
+            backgroundImage: `url("${bg}")`,
+            backgroundSize: "100% 100%",
+          }}
+        ></div>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: 1080,
+            width: 1920,
+            backgroundImage: `url("${front}")`,
+            backgroundSize: "100% 100%",
+            zIndex: 9999,
+          }}
+        ></div>
         {Object.keys(state).length === 0 && (
           <div className={cx(css.infoBox)}>
             Not connected to backend service!
@@ -119,10 +131,6 @@ export default class Overlay extends React.Component {
               <div className={cx(css.infoBox)}>Not connected to client!</div>
             )}
             <div className={cx(css.MiddleBox)}>
-              <div className={cx(css.Logo)}>
-                <img src={logo} alt="" />
-              </div>
-              <div className={cx(css.Patch)}>{state.state}</div>
               <div
                 className={cx(css.Timer, {
                   [`${css.Red} ${css.Blue}`]:
@@ -130,9 +138,29 @@ export default class Overlay extends React.Component {
                   [css.Blue]: state.blueTeam.isActive,
                   [css.Red]: state.redTeam.isActive,
                 })}
+                style={{}}
               >
-                <div className={cx(css.Background, css.Blue)} />
-                <div className={cx(css.Background, css.Red)} />
+                <div
+                  className={cx(css.Background, css.Blue)}
+                  style={{
+                    backgroundImage: `url("${left}")`,
+
+                    opacity:
+                      state.blueTeam.isActive && !state.redTeam.isActive
+                        ? 1
+                        : 0,
+                  }}
+                />
+                <div
+                  className={cx(css.Background, css.Red)}
+                  style={{
+                    backgroundImage: `url("${right}")`,
+                    opacity:
+                      !state.blueTeam.isActive && state.redTeam.isActive
+                        ? 1
+                        : 0,
+                  }}
+                />
                 {state.timer < 100 && (
                   <div className={cx(css.TimerChars)}>
                     {state.timer
@@ -145,10 +173,11 @@ export default class Overlay extends React.Component {
                       ))}
                   </div>
                 )}
-                {state.timer >= 100 && (
-                  <div className={cx(css.TimerChars)}>{state.timer}</div>
-                )}
               </div>
+              {state.timer >= 100 && (
+                <div className={cx(css.TimerChars)}>{state.timer}</div>
+              )}
+              <div className={cx(css.Patch)}>{state.state}</div>
             </div>
             {renderTeam(css.TeamBlue, config.frontend.blueTeam, state.blueTeam)}
             {renderTeam(css.TeamRed, config.frontend.redTeam, state.redTeam)}

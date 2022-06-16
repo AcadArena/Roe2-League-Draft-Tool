@@ -1,5 +1,5 @@
 .Picks {
-  width: 100%;
+  // width: 100%;
   height: var(--box-pick-height);
   display: flex;
   box-sizing: border-box;
@@ -7,10 +7,10 @@
 
   .Pick {
     position: relative;
-    width: 20%;
+    width: 164px;
+    margin-right: 4px;
     height: 100%;
     overflow: hidden;
-    background-color: #0a0a0a;
     border-left: solid var(--border-between-color) 1px;
 
     &.Active {
@@ -18,6 +18,9 @@
         height: calc(2 * var(--pick-name-height)) !important;
         margin-top: calc(-1 * var(--pick-name-height));
         line-height: calc(2 * var(--pick-name-height));
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
       }
     }
 
@@ -34,12 +37,16 @@
       text-align: center;
       font-size: calc(0.5 * var(--pick-name-height));
       line-height: var(--pick-name-height);
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
     }
 
     .SummonerSpells {
       position: absolute;
-      top: calc(var(--box-pick-height) - 30px - var(--summoner-spell-size));
-      right: 0;
+      bottom: calc(var(--pick-name-height) + 17px);
+      // top: calc(var(--box-pick-height) - 30px - var(--summoner-spell-size));
+      left: 0;
       z-index: 10;
 
       img {
@@ -49,16 +56,9 @@
     }
 
     .PickImage {
-      position: relative;
-      height: calc(100% - var(--pick-name-height));
-
-      img {
-        width: calc(100% + calc(2 * var(--pick-image-crop)));
-        height: 100%;
-        object-fit: cover;
-        object-position: calc(-1 * var(--pick-image-crop))
-          calc(-1 * var(--pick-image-crop));
-      }
+      position: absolute;
+      width: 100%;
+      height: 100%;
 
       &.Active::before {
         content: "";
@@ -90,6 +90,9 @@
       position: relative;
       background-color: white;
       color: black;
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
     }
     .PlayerName::after {
       content: "";
@@ -117,6 +120,9 @@
       position: relative;
       background-color: white;
       color: black;
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
     }
     .PlayerName::after {
       content: "";

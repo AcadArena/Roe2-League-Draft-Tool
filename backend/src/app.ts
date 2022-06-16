@@ -12,9 +12,9 @@ import DataDragon from "./data/league/DataDragon"
 import Controller from "./state/Controller"
 import GlobalContext from "./GlobalContext"
 import "./Console"
+import isAdmin from "is-win32-admin"
 
 const argv = minimist(process.argv.slice(2))
-
 // Needs to be done before logging is initialized, in order to set log level correctly
 GlobalContext.commandLine = {
   data: argv["data"],
@@ -56,6 +56,12 @@ const controller = new Controller({ dataProvider, state, ddragon })
 const tickManager = new TickManager({ controller })
 
 const main = async (): Promise<void> => {
+  const admin = await isAdmin()
+  if (!admin) {
+    for (let i = 0; i < 5; i++) {
+      log.error("⚠️ ADMIN PRIVILEGES REQUIRED.")
+    }
+  }
   await ddragon.init()
 
   const server = http.createServer(app)
