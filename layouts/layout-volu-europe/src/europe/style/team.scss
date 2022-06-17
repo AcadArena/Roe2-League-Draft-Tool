@@ -3,6 +3,7 @@
   height: var(--box-height);
   display: flex;
   bottom: var(--champselect-margin-bot);
+  z-index: 99;
 
   .TeamName {
     font-size: 40px;
@@ -42,9 +43,10 @@
     }
 
     .BansWrapper {
-      right: 0;
-      bottom: calc(100% + 20px);
+      right: -8px;
+      bottom: calc(100% + 26px);
       transform: rotate(1.7deg);
+      z-index: 0;
     }
     .Bans {
       // justify-content: flex-end;
@@ -84,12 +86,19 @@
   &.TeamRed {
     right: 61px;
     transform: rotate(1.7deg);
-
+    .BansWrapper {
+      left: -8px;
+      bottom: calc(100% + 26px);
+      transform: rotate(-1.7deg);
+      z-index: 0;
+    }
     .TeamScore {
       border-left: 3px solid black;
     }
 
     .Bans {
+      display: flex;
+      // flex-direction: row-reverse;
       .Ban {
         .BanImage.Active::before {
           background-image: linear-gradient(

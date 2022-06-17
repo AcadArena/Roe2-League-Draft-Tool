@@ -55,11 +55,11 @@ export default class Overlay extends React.Component {
 
     console.log(state)
 
-    const renderBans = (teamState) => {
+    const renderBans = (teamState, space) => {
       const list = teamState.bans.map((ban, idx) => (
         <Ban key={`ban-${idx}`} {...ban} />
       ))
-      list.splice(3, 0, <div key="ban-spacer" className={css.Spacing} />)
+      list.splice(space, 0, <div key="ban-spacer" className={css.Spacing} />)
       return <div className={cx(css.BansBox)}>{list}</div>
     }
 
@@ -72,8 +72,8 @@ export default class Overlay extends React.Component {
         </div>
         <div className={css.BansWrapper}>
           <div className={cx(css.Bans)}>
-            {teamName === css.TeamRed && renderBans(teamState)}
-            {teamName === css.TeamBlue && renderBans(teamState)}
+            {teamName === css.TeamRed && renderBans(teamState, 2)}
+            {teamName === css.TeamBlue && renderBans(teamState, 3)}
           </div>
         </div>
       </div>
@@ -106,6 +106,7 @@ export default class Overlay extends React.Component {
             width: 1920,
             backgroundImage: `url("${bg}")`,
             backgroundSize: "100% 100%",
+            zIndex: 2,
           }}
         ></div>
         <div

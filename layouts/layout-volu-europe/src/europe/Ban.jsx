@@ -9,9 +9,14 @@ const Bans = (props) => (
       className={cx(css.BanImage, {
         [css.Active]: props.isActive,
       })}
-    >
-      <img src={props.champion.squareImg} alt="" />
-    </div>
+      style={{
+        backgroundImage: `url("${props.champion.squareImg}")`,
+        backgroundSize: "cover",
+        height: 62,
+        width: 62,
+        backgroundPosition: "bottom",
+      }}
+    ></div>
   </div>
 )
 

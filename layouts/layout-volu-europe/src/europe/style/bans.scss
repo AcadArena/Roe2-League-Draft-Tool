@@ -1,25 +1,16 @@
 .Bans {
   width: 100%;
-  height: var(--box-ban-height);
   display: flex;
   box-sizing: border-box;
+  position: relative;
   .Ban {
     display: block;
-    width: calc(var(--box-ban-height) - calc(2 * var(--border-width)));
-    height: calc(var(--box-ban-height) - calc(2 * var(--border-width)));
     overflow: hidden;
     position: relative;
+    margin-right: 10px;
 
     &:first-child {
       border: none;
-    }
-
-    img {
-      width: calc(100% + calc(2 * var(--ban-image-crop)));
-      height: 100%;
-      object-fit: cover;
-      object-position: calc(-1 * var(--ban-image-crop))
-        calc(-1 * var(--ban-image-crop) + 1px);
     }
 
     .BanImage.Active::before {
@@ -31,6 +22,7 @@
       height: 100%;
       opacity: 0.5;
       animation: pulsate-ban 1.5s infinite;
+      z-index: 1;
     }
   }
 
@@ -39,9 +31,9 @@
   }
 }
 
-&.TeamBlue .BansBox {
-  flex-direction: row-reverse;
-}
+// &.TeamBlue .BansBox {
+//   flex-direction: row-reverse;
+// }
 
 .BansWrapper {
   overflow: hidden;
