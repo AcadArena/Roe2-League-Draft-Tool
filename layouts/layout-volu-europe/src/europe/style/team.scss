@@ -1,5 +1,5 @@
 .Team {
-  position: fixed;
+  position: absolute;
   height: var(--box-height);
   display: flex;
   bottom: var(--champselect-margin-bot);
@@ -43,7 +43,7 @@
     }
 
     .BansWrapper {
-      right: -8px;
+      right: -9px;
       bottom: calc(100% + 26px);
       transform: rotate(1.7deg);
       z-index: 0;
@@ -87,7 +87,7 @@
     right: 61px;
     transform: rotate(1.7deg);
     .BansWrapper {
-      left: -8px;
+      left: -4px;
       bottom: calc(100% + 26px);
       transform: rotate(-1.7deg);
       z-index: 0;

@@ -162,7 +162,7 @@ export default class Overlay extends React.Component {
                         : 0,
                   }}
                 />
-                {state.timer < 100 && (
+                {state.timer < 100 && state.timer !== 0 && (
                   <div className={cx(css.TimerChars)}>
                     {state.timer
                       .toString()
