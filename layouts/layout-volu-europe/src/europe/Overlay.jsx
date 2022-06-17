@@ -55,12 +55,17 @@ export default class Overlay extends React.Component {
 
     console.log(state)
 
-    const renderBans = (teamState, space) => {
+    const renderBans = (teamState, reversed) => {
       const list = teamState.bans.map((ban, idx) => (
         <Ban key={`ban-${idx}`} {...ban} />
       ))
-      list.splice(space, 0, <div key="ban-spacer" className={css.Spacing} />)
-      return <div className={cx(css.BansBox)}>{list}</div>
+
+      list.splice(3, 0, <div key="ban-spacer" className={css.Spacing} />)
+      return (
+        <div className={cx(css.BansBox)}>
+          {reversed ? list.reverse() : list}
+        </div>
+      )
     }
 
     const renderTeam = (teamName, teamConfig, teamState) => (
@@ -72,8 +77,8 @@ export default class Overlay extends React.Component {
         </div>
         <div className={css.BansWrapper}>
           <div className={cx(css.Bans)}>
-            {teamName === css.TeamRed && renderBans(teamState, 2)}
-            {teamName === css.TeamBlue && renderBans(teamState, 3)}
+            {teamName === css.TeamRed && renderBans(teamState, true)}
+            {teamName === css.TeamBlue && renderBans(teamState)}
           </div>
         </div>
       </div>
