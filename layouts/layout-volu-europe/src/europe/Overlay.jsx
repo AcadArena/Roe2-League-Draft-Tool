@@ -10,6 +10,8 @@ import right from "../assets/right-arrow.png"
 import bg from "../assets/bg.png"
 import front from "../assets/front.png"
 
+import { ms, s, h, m } from "time-convert"
+
 export default class Overlay extends React.Component {
   state = {
     currentAnimationState: css.TheAbsoluteVoid,
@@ -167,22 +169,16 @@ export default class Overlay extends React.Component {
                         : 0,
                   }}
                 />
-                {state.timer < 100 && state.timer !== 0 && (
-                  <div className={cx(css.TimerChars)}>
-                    {state.timer
-                      .toString()
-                      .split("")
-                      .map((char, idx) => (
-                        <div key={`div-${idx}`} className={cx(css.TimerChar)}>
-                          {char}
-                        </div>
-                      ))}
-                  </div>
-                )}
+                <div className={cx([css.TimerChars, css.TimerChar])}>
+                  {ms
+                    .to(
+                      m,
+                      s
+                    )(state.timer * 1000)
+                    .filter(Boolean)
+                    .join(":")}
+                </div>
               </div>
-              {state.timer >= 100 && (
-                <div className={cx(css.TimerChars)}>{state.timer}</div>
-              )}
               <div className={cx(css.Patch)}>{state.state}</div>
             </div>
             {renderTeam(css.TeamBlue, config.frontend.blueTeam, state.blueTeam)}

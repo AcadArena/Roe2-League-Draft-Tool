@@ -38,8 +38,9 @@ function App() {
     })
 
     try {
-      Window.PB.start()
-    } catch {
+      Window.PB.start(`http://${window.location.hostname}:8999`)
+    } catch (err) {
+      console.error(err)
       setError(
         "error: failed to read backend url query param. make sure you set ?backend=ws://[ip]:[port] as query parameter."
       )

@@ -62,15 +62,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    .TimerChar {
-      width: 30px;
-      margin: 0 2px;
-      text-align: right;
-      margin-bottom: 30px;
-      &:nth-child(2) {
-        text-align: left;
-      }
-    }
+    margin-bottom: 30px;
+    text-align: center;
   }
 }
