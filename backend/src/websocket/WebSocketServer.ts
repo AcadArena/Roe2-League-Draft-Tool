@@ -1,37 +1,36 @@
-import * as ws from "ws"
 import * as fs from "fs"
 import * as http from "http"
 
 import logger from "../logging"
-import { StateData } from "../types/dto"
 import State from "../state"
-import PBEvent from "../types/events/PBEvent"
-import NewStateEvent from "../types/events/NewStateEvent"
-import HeartbeatEvent from "../types/events/HeartbeatEvent"
-import ChampSelectStartedEvent from "../types/events/ChampSelectStartedEvent"
+import { Config, StateData } from "../types/dto"
 import ChampSelectEndedEvent from "../types/events/ChampSelectEndedEvent"
+import ChampSelectStartedEvent from "../types/events/ChampSelectStartedEvent"
 import NewActionEvent from "../types/events/NewActionEvent"
+import NewStateEvent from "../types/events/NewStateEvent"
+import PBEvent from "../types/events/PBEvent"
+
+import io, { Server, Socket } from "socket.io"
 
 const log = logger("websocket")
 
 class WebSocketServer {
-  server: ws.Server
+  server: Server
   state: State
-  clients: Array<WebSocket> = []
   exampleClients: Array<WebSocket> = []
   heartbeatInterval?: NodeJS.Timeout
-  config: any
+  config = new Config()
 
   constructor(server: http.Server, state: State) {
-    this.server = new ws.Server({ server })
+    this.server = new io.Server(server, { cors: { origin: "*" } })
     this.state = state
 
     this.sendHeartbeat = this.sendHeartbeat.bind(this)
 
     // Event listeners
-    this.server.on("connection", (socket: WebSocket, request) =>
-      this.handleConnection(socket, request)
-    )
+    this.server.on("connection", (socket) => {
+      this.handleConnection(socket)
+    })
 
     state.on("stateUpdate", (newState: StateData) => {
       newState.config = this.config
@@ -48,32 +47,29 @@ class WebSocketServer {
     })
   }
 
+  parse<T>(obj: T): T {
+    return JSON.parse(JSON.stringify(obj)) as T
+  }
+
   startHeartbeat(): void {
     this.heartbeatInterval = setInterval(this.sendHeartbeat, 1000)
   }
 
-  handleConnection(socket: WebSocket, request: http.IncomingMessage): void {
-    this.clients.push(socket)
-    socket.send(JSON.stringify(new NewStateEvent(this.state.data)))
+  handleConnection(socket: Socket): void {
+    socket.emit("newState", { state: this.state.data })
   }
 
   sendEvent(event: PBEvent): void {
-    const serializedEvent = JSON.stringify(event)
+    const serializedEvent = this.parse(event)
     log.debug(`New Event: ${serializedEvent}`)
 
-    this.clients.forEach((client: WebSocket) => {
-      client.send(serializedEvent)
-    })
+    const { eventType, ...data } = serializedEvent
+    this.server.emit(eventType, data)
   }
 
   sendHeartbeat(): void {
     this.config = JSON.parse(fs.readFileSync("./config.json", "utf8"))
-    const heartbeatEvent = new HeartbeatEvent(this.config)
-    const heartbeatSerialized = JSON.stringify(heartbeatEvent)
-
-    this.clients.forEach((client: WebSocket) => {
-      client.send(heartbeatSerialized)
-    })
+    this.server.emit("heartbeat", this.config)
   }
 }
 

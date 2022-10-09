@@ -1,18 +1,18 @@
 import express from "express"
 import http from "http"
 
-import WebSocketServer from "./websocket"
-import logger, { setLogLevel } from "./logging"
-import TickManager from "./TickManager"
-import { AddressInfo } from "net"
-import State from "./state"
-import { getDataProvider } from "./data/DataProviderService"
-import minimist from "minimist"
-import DataDragon from "./data/league/DataDragon"
-import Controller from "./state/Controller"
-import GlobalContext from "./GlobalContext"
-import "./Console"
 import isAdmin from "is-win32-admin"
+import minimist from "minimist"
+import { AddressInfo } from "net"
+import "./Console"
+import { getDataProvider } from "./data/DataProviderService"
+import DataDragon from "./data/league/DataDragon"
+import GlobalContext from "./GlobalContext"
+import logger, { setLogLevel } from "./logging"
+import State from "./state"
+import Controller from "./state/Controller"
+import TickManager from "./TickManager"
+import WebSocketServer from "./websocket"
 
 const argv = minimist(process.argv.slice(2))
 // Needs to be done before logging is initialized, in order to set log level correctly
@@ -55,6 +55,10 @@ const dataProvider = getDataProvider()
 const controller = new Controller({ dataProvider, state, ddragon })
 const tickManager = new TickManager({ controller })
 
+const server = http.createServer(app)
+app.use("/cache", express.static(__dirname + "/../cache"))
+export const wsServer = new WebSocketServer(server, state)
+
 const main = async (): Promise<void> => {
   const admin = await isAdmin()
   if (!admin) {
@@ -64,9 +68,6 @@ const main = async (): Promise<void> => {
   }
   await ddragon.init()
 
-  const server = http.createServer(app)
-  app.use("/cache", express.static(__dirname + "/../cache"))
-  const wsServer = new WebSocketServer(server, state)
   wsServer.startHeartbeat()
 
   tickManager.startLoop()

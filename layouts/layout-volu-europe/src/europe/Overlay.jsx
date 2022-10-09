@@ -1,16 +1,16 @@
-import React from "react"
 import cx from "classnames"
+import React from "react"
 import Pick from "./Pick"
 
-import css from "./style/index.module.scss"
 import Ban from "./Ban"
+import css from "./style/index.module.scss"
 
-import left from "../assets/left-arrow.png"
-import right from "../assets/right-arrow.png"
 import bg from "../assets/bg.png"
 import front from "../assets/front.png"
+import left from "../assets/left-arrow.png"
+import right from "../assets/right-arrow.png"
 
-import { ms, s, h, m } from "time-convert"
+import { m, ms, s } from "time-convert"
 
 export default class Overlay extends React.Component {
   state = {
