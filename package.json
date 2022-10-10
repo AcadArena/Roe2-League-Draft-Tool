@@ -18,7 +18,8 @@
   "scripts": {
     "prepare": "husky install",
     "start": "concurrently \"yarn workspace backend start\" \"yarn workspace layout-allg start\"",
-    "start:test": "concurrently \"yarn workspace backend start --data ../recordings/tournament-draft\" \"yarn workspace layout-allg start\""
+    "start:test": "concurrently \"yarn workspace backend start --data ../recordings/tournament-draft\" \"yarn workspace allg-s2 dev\"",
+    "start:backend:test": "yarn workspace backend start --data ../recordings/tournament-draft"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

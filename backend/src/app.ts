@@ -1,5 +1,6 @@
 import express from "express"
 import http from "http"
+import { resolve as resolvePath } from "path"
 
 import isAdmin from "is-win32-admin"
 import minimist from "minimist"
@@ -56,6 +57,10 @@ const controller = new Controller({ dataProvider, state, ddragon })
 const tickManager = new TickManager({ controller })
 
 const server = http.createServer(app)
+app.get("/image", (req, res) => {
+  res.sendFile(resolvePath(__dirname, `../${req.query.path}`))
+})
+
 app.use("/cache", express.static(__dirname + "/../cache"))
 export const wsServer = new WebSocketServer(server, state)
 
