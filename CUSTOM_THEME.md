@@ -20,7 +20,7 @@ index.html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>P&B UI by RCV - Test</title>
+    <title>League Draft Overlay</title>
   </head>
   <body>
     <div>Status: <span id="status">LOADED</span></div>
@@ -76,8 +76,3 @@ index.html
 ```
 
 This is a really basic example that connects to the backend using the frontend library that logs all incoming events.
-
-Now you also need to copy the frontend part. Just paste that file into your project directory: [frontend-lib.js](frontend/frontend-lib.js).
-Make sure the name matches exactly!
-
-## Making it look more like a pick&ban UI
