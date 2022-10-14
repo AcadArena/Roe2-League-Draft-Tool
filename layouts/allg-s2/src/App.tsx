@@ -4,11 +4,9 @@ import front from "./assets/front.png"
 import DraftComponent from "./components/Draft.c"
 import TimerComponent from "./components/Timer.c"
 import { SubwayPropBerlin } from "./fonts/SubwayProBerlin/Subway.font"
-import { useStateData } from "./redux/redux.hook"
 import commonCss from "./utils/commonCss"
 
 function App() {
-  const state = useStateData()
   return (
     <MantineProvider withNormalizeCSS withGlobalStyles>
       <SubwayPropBerlin />
